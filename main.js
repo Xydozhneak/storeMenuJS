@@ -57,6 +57,7 @@ function showInfo(info) {
   buyButton.textContent = 'Buy';
   infoContainer.prepend(buyButton);
   buyButton.addEventListener('click', () => {
+    alert('You buy all items');
     clearList();
   });
   info.forEach(item => {
