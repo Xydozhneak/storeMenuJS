@@ -11,12 +11,54 @@
        body{
         display: flex;
        }
+      .d-none{
+        display: none !important;
+      }
+      .orderForm{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background-color: rgba(218, 218, 191, 0.507);
+      }
+      .orderForm input{
+        border-radius: 10px;
+        border: 2px solid black;
+        width: 80%;
+        height: 30px;
+      }
+
+     
     </style>
     <div id="category"></div>
     <div id="list"></div>
-    <div id="info">
-    </div>
-
+    <div id="info"></div>
+    <div id="myForm" class="d-none orderForm">
+        <label for="fullNameField">Full Name:</label>
+        <input type="text" id="fullNameField">
+        
+        <label for="citySelect">City:</label>
+        <select id="citySelect">
+        </select>
+        
+        <label for="branchField">New Post Office Branch for Delivery:</label>
+        <input type="number" id="branchField">
+        
+        <label for="codPayment">Cash on Delivery or Card Payment:</label>
+        <input type="radio" id="codPayment" name="paymentMethod" value="COD">
+        <label for="codPayment">Cash on Delivery</label>
+        <input type="radio" id="cardPayment" name="paymentMethod" value="Card">
+        <label for="cardPayment">Card Payment</label>
+        
+        <label for="quantityField">Quantity of Purchased Products:</label>
+        <input type="number" id="quantityField">
+        
+        <label for="commentField">Order Comment:</label>
+        <textarea id="commentField"></textarea>
+        
+        <button type="button" id="confirm">Confirm</button>
+      </div>
     <script src="main.js"></script>
 </body>
 </html>

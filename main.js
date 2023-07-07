@@ -27,10 +27,23 @@ const categoryList = [
     }
   }
 ];
+const cities = ["Odesa", "Harkiv", "Lviv", "Mykolaiv"];
 
+
+const fullNameField = document.querySelector("#fullNameField");
+const citySelect = document.querySelector("#citySelect");
+const branchField = document.querySelector("#branchField");
+const codPayment = document.querySelector("#codPayment");
+const cardPayment = document.querySelector("#cardPayment");
+const quantityField = document.querySelector("#quantityField");
+const commentField = document.querySelector("#commentField");
+const confirmButton = document.querySelector("#confirm");
+const buyButton = document.createElement('button');
+buyButton.textContent = 'Buy';
 const categoryContainer = document.querySelector('#category');
 const listContainer = document.querySelector('#list');
 const infoContainer = document.querySelector('#info');
+const orderForm = document.querySelector('#myForm');
 
 categoryList.forEach(item => {
   const categoryItem = document.createElement('li');
@@ -41,11 +54,14 @@ categoryList.forEach(item => {
   categoryContainer.append(categoryItem);
 });
 
+let selectedProduct;
+
 function showItems(items) {
   for (let key in items) {
     const listItem = document.createElement('li');
     listItem.textContent = `${key}`;
     listItem.addEventListener('click', () => {
+      selectedProduct = [key];
       showInfo(items[key]);
     });
     listContainer.append(listItem);
@@ -53,13 +69,9 @@ function showItems(items) {
 }
 
 function showInfo(info) {
-  const buyButton = document.createElement('button');
-  buyButton.textContent = 'Buy';
+  infoContainer.innerHTML = '';
   infoContainer.prepend(buyButton);
-  buyButton.addEventListener('click', () => {
-    alert('You buy all items');
-    clearList();
-  });
+  buyButton.addEventListener('click', showForm);
   info.forEach(item => {
     const infoItem = document.createElement('li');
     infoItem.textContent = item;
@@ -72,4 +84,41 @@ function clearList() {
   infoContainer.innerHTML = '';
 }
 
+function showForm() {
+  cities.forEach(item =>{
+    const currentCity =document.createElement('option');
+    currentCity.value = item;
+    currentCity.textContent = `${item}`;
+    citySelect.append(currentCity);
+  })
+  orderForm.classList.remove('d-none');
+}
 
+function checkFields() {
+  if (!fullNameField.value || !citySelect.value || !branchField.value || (!codPayment.checked && !cardPayment.checked) || !quantityField.value) {
+    alert('Please fill in all the order form fields.');
+    return false;
+  }
+  return true;
+}
+
+confirmButton.addEventListener('click', function(event) {
+  event.preventDefault();
+  if (checkFields()) {
+    const orderData = {
+      fullName: fullNameField.value,
+      city: citySelect.value,
+      branch: branchField.value,
+      paymentMethod: codPayment.checked ? 'COD' : 'Card',
+      quantity: quantityField.value,
+      comment: commentField.value
+    };
+    orderForm.innerHTML = (`<h2>Your order was confirmed</h2> 
+                            city : ${orderData.city} 
+                            branch : ${orderData.branch} 
+                            Product :${selectedProduct}`);
+    orderForm.append(infoContainer);
+    buyButton.classList.add('d-none');
+    console.log(orderData);
+  }
+});
